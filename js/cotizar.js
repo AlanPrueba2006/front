@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (res.ok) {
         alert("¡Cotización enviada con éxito!");
-        window.location.href = "../html/pago.html";
+        window.location.href = "../html/cotizaciones.html";
       } else {
         const errData = await res.json();
         console.error("Error en cotización:", errData);
