@@ -60,3 +60,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.innerHTML = `<p class="text-danger">Hubo un error al cargar tus cotizaciones.</p>`;
   }
 });
+
+document.getElementById("cerrarSesionLateral")?.addEventListener("click", () => {
+  sessionStorage.clear();
+  localStorage.removeItem("session");
+  window.location.href = "../index.html";
+});
+
