@@ -13,7 +13,7 @@ document.getElementById("registerForm").addEventListener("submit", async functio
   };
 
   try {
-    const response = await fetch("https://back-ww44.onrender.com/register/", {
+    const response = await fetch("https://back-ww44.onrender.com/usuarios/register/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
