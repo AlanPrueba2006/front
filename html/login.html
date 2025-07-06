@@ -22,9 +22,14 @@
             </div>
             <div class="mb-4">
               <label for="password" class="form-label text-secondary">Contraseña</label>
-              <input type="password" class="form-control bg-light text-dark border-0 border-bottom" id="password" required>
+              <input type="password" class="form-control bg-light text-dark border-0 border-bottom" id="password"
+                required>
             </div>
-            <button type="submit" class="btn btn-secondary w-100 fw-semibold">Ingresar</button>
+            <button type="submit" id="loginBtn" class="btn btn-secondary w-100 fw-semibold">
+              Iniciar sesión
+              <span id="spinner" class="spinner-border spinner-border-sm ms-2 d-none" role="status"
+                aria-hidden="true"></span>
+            </button>
           </form>
 
           <!-- Enlace de registro -->
