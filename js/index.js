@@ -51,35 +51,37 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     }
 
-    if (user) {
-      const agendaItem = document.createElement("li");
-      agendaItem.className = "nav-item";
-      agendaItem.innerHTML = `<a class="nav-link" href="${pathPrefix}html/agenda.html">Agendar</a>`;
-      navList.appendChild(agendaItem);
-
-      const userItem = document.createElement("li");
-      userItem.className = "nav-item dropdown";
-      userItem.innerHTML = `
-        <a class="nav-link dropdown-toggle text-white" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Perfil
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="perfilDropdown">
-          <li><a class="dropdown-item text-white" href="${pathPrefix}html/perfil.html">Ver Perfil</a></li>
-          <li><hr class="dropdown-divider"></li>
-          <li><button class="dropdown-item text-danger" id="logoutBtn">Cerrar Sesión</button></li>
-        </ul>
-      `;
-      navList.appendChild(userItem);
-
-      localStorage.setItem("session", "true");
-
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        sessionStorage.clear();
-        localStorage.removeItem("session");
-        location.reload();
-      });
+    if (user?.rol === "admin") {
+      window.location.href = `${pathPrefix}html/admin.html`;
+      return;
     }
 
+    const agendaItem = document.createElement("li");
+    agendaItem.className = "nav-item";
+    agendaItem.innerHTML = `<a class="nav-link" href="${pathPrefix}html/agenda.html">Agendar</a>`;
+    navList.appendChild(agendaItem);
+
+    const userItem = document.createElement("li");
+    userItem.className = "nav-item dropdown";
+    userItem.innerHTML = `
+      <a class="nav-link dropdown-toggle text-white" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Perfil
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="perfilDropdown">
+        <li><a class="dropdown-item text-white" href="${pathPrefix}html/perfil.html">Ver Perfil</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><button class="dropdown-item text-danger" id="logoutBtn">Cerrar Sesión</button></li>
+      </ul>
+    `;
+    navList.appendChild(userItem);
+
+    localStorage.setItem("session", "true");
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      sessionStorage.clear();
+      localStorage.removeItem("session");
+      location.reload();
+    });
   } else {
     const loginBtn = document.createElement("li");
     loginBtn.className = "nav-item";
