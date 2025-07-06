@@ -18,22 +18,20 @@ document.addEventListener("DOMContentLoaded", async () => {
       const user = await response.json();
 
       if (response.ok) {
-        // 🔸 Elimina el botón de iniciar sesión
-        const loginLink = navList.querySelector('a[href="../html/login.html"]');
-        if (loginLink) {
-          const loginLi = loginLink.closest("li");
-          loginLi?.remove();
-        }
+        const loginLinks = navList.querySelectorAll("a");
+        loginLinks.forEach((link) => {
+          if (link.href.includes("login.html")) {
+            link.closest("li")?.remove();
+          }
+        });
 
-        // 🔸 Evita duplicar "Agendar"
-        const agendaLinks = navList.querySelectorAll('a[href="../html/agenda.html"]');
+        const agendaLinks = navList.querySelectorAll('a[href*="agenda.html"]');
         if (agendaLinks.length > 1) {
           for (let i = 1; i < agendaLinks.length; i++) {
             agendaLinks[i].closest("li")?.remove();
           }
         }
 
-        // 🔸 Agrega "Perfil" y "Cerrar Sesión"
         const userItem = document.createElement("li");
         userItem.className = "nav-item dropdown";
         userItem.innerHTML = `
@@ -48,10 +46,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
         navList.appendChild(userItem);
 
-        // 🔸 Marca sesión como activa
         localStorage.setItem("session", "true");
 
-        // 🔸 Logout
         document.getElementById("logoutBtn").addEventListener("click", () => {
           sessionStorage.clear();
           localStorage.removeItem("session");
