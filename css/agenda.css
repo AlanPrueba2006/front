@@ -1,0 +1,69 @@
+ body {
+     background-color: #f0f4fa;
+     font-family: 'Segoe UI', sans-serif;
+ }
+
+ .agenda {
+     .form-section {
+         background-color: #fff;
+         border-radius: 12px;
+         padding: 40px;
+         box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+         margin: 40px auto;
+         max-width: 900px;
+     }
+
+     h2,
+     h4 {
+         color: #333c4e;
+         margin-bottom: 10px;
+     }
+
+     .section-description {
+         color: #6c757d;
+         margin-bottom: 25px;
+     }
+
+     label {
+         font-weight: 600;
+         color: #495057;
+     }
+
+     .form-control,
+     .form-select {
+         background-color: #f9fafc;
+         border-radius: 6px;
+         border: 1px solid #ced4da;
+     }
+
+     .form-control:focus,
+     .form-select:focus {
+         border-color: #0d6efd;
+         box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+     }
+
+     .btn-yellow {
+         background-color: #ffc107;
+         color: black;
+         font-weight: bold;
+         border-radius: 30px;
+         padding: 10px 30px;
+     }
+
+     .btn-yellow:hover {
+         background-color: #e0a800;
+     }
+
+     .form-check-label {
+         font-weight: 500;
+     }
+
+     .form-check-input:checked {
+         background-color: #0d6efd;
+         border-color: #0d6efd;
+     }
+
+     textarea.form-control {
+         resize: vertical;
+     }
+ }
