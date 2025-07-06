@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   const baseItems = [
     { label: "Inicio", href: `${pathPrefix}index.html` },
     { label: "Nosotros", href: `${pathPrefix}html/nosotros.html` },
-    { label: "Servicios", href: `${pathPrefix}html/servicios.html` }
+    { label: "Servicios", href: `${pathPrefix}html/servicios.html` },
   ];
 
-  baseItems.forEach(item => {
+  baseItems.forEach((item) => {
     const li = document.createElement("li");
     li.className = "nav-item";
     li.innerHTML = `<a class="nav-link" href="${item.href}">${item.label}</a>`;
@@ -28,14 +28,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       user = JSON.parse(cachedUser);
     } else {
       try {
-        const response = await fetch("https://back-ww44.onrender.com/decrypt-user/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({ usuario_encriptado: encryptedUser })
-        });
+        const response = await fetch(
+          "https://back-ww44.onrender.com/decrypt-user/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ usuario_encriptado: encryptedUser }),
+          }
+        );
 
         if (response.ok) {
           user = await response.json();
@@ -80,7 +83,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("logoutBtn").addEventListener("click", () => {
       sessionStorage.clear();
       localStorage.removeItem("session");
-      location.reload();
+      window.location.href = `${pathPrefix}index.html`;
     });
   } else {
     const loginBtn = document.createElement("li");
