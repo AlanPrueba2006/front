@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
-  const tablaUsuarios = document.getElementById("usuariosTabla");
+  const tablaUsuarios = document.getElementById("tablaUsuarios");
   const formCrear = document.getElementById("formCrearUsuario");
-  const modalCrear = new bootstrap.Modal(document.getElementById("crearUsuarioModal"));
+  const modalCrear = new bootstrap.Modal(document.getElementById("modalCrearUsuario"));
 
   async function obtenerUsuarios() {
     try {
@@ -33,8 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderUsuarios(usuarios) {
-    const tbody = tablaUsuarios.querySelector("tbody");
-    tbody.innerHTML = "";
+    tablaUsuarios.innerHTML = "";
     usuarios.forEach((u) => {
       const fila = document.createElement("tr");
       fila.innerHTML = `
@@ -51,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </button>
         </td>
       `;
-      tbody.appendChild(fila);
+      tablaUsuarios.appendChild(fila);
     });
   }
 
@@ -116,3 +115,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   obtenerUsuarios();
 });
+
