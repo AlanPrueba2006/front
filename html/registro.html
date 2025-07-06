@@ -12,47 +12,52 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-5">
+            <div class="col-lg-6">
                 <div class="card bg-dark border-0 shadow p-4 rounded-4">
                     <h4 class="text-center text-light mb-4 fw-bold">Registro</h4>
                     <form id="loginForm">
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label for="nombre" class="form-label text-secondary">Nombre</label>
+                                <input type="text" class="form-control bg-light text-dark border-0 border-bottom"
+                                    id="nombre" required>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="apellido" class="form-label text-secondary">Apellido</label>
+                                <input type="text" class="form-control bg-light text-dark border-0 border-bottom"
+                                    id="apellido" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mb-3 col-6">
+                                <label for="dni" class="form-label text-secondary">DNI</label>
+                                <input type="number" class="form-control bg-light text-dark border-0 border-bottom"
+                                    id="dni" required>
+                            </div>
+                            <div class="mb-3 col-6">
+                                <label for="celular" class="form-label text-secondary">Celular</label>
+                                <input type="number" class="form-control bg-light text-dark border-0 border-bottom"
+                                    id="cecular" maxlength="9" required>
+                            </div>
+                        </div>
                         <div class="mb-3">
-                            <label for="nombre" class="form-label text-secondary">Nombre</label>
-                            <input type="text" class="form-control bg-light text-dark border-0 border-bottom"
-                                id="nombre" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="apellido" class="form-label text-secondary">Apellido</label>
-                            <input type="text" class="form-control bg-light text-dark border-0 border-bottom"
-                                id="apellido" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="dni" class="form-label text-secondary">DNI</label>
-                            <input type="number" class="form-control bg-light text-dark border-0 border-bottom" id="dni"
-                                required>
-                        </div>
-                        <div class="mb-4">
                             <label for="direccion" class="form-label text-secondary">Dirección</label>
                             <input type="text" class="form-control bg-light text-dark border-0 border-bottom"
                                 id="direccion" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="celular" class="form-label text-secondary">Cecular</label>
-                            <input type="number" class="form-control bg-light text-dark border-0 border-bottom"
-                                id="cecular" max="9" required>
                         </div>
                         <div class="mb-4">
                             <label for="correo" class="form-label text-secondary">Correo</label>
                             <input type="text" class="form-control bg-light text-dark border-0 border-bottom"
                                 id="direccion" required>
                         </div>
-                        <button type="submit" class="btn btn-secondary w-100 fw-semibold">registrarse</button>
+                        <button type="submit" class="btn btn-secondary w-100 fw-semibold">Registrarse</button>
                     </form>
 
                     <!-- Enlace de registro -->
                     <div class="text-center mt-3">
-                        <span class="text-white-50">¿No tienes cuenta?</span>
-                        <a href="registro.html" class="text-warning fw-semibold text-decoration-none">Regístrate</a>
+                        <span class="text-white-50">¿Ya tienes cuenta?</span>
+                        <a href="../html/login.html" class="text-warning fw-semibold text-decoration-none">Inicia
+                            Sesión</a>
                     </div>
 
                 </div>
