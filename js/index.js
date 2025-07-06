@@ -18,31 +18,40 @@ document.addEventListener("DOMContentLoaded", async () => {
       const user = await response.json();
 
       if (response.ok) {
-        // Elimina botón de login si existe
+        // 🔸 Elimina el botón de iniciar sesión
         const loginLink = navList.querySelector('a[href="../html/login.html"]');
-        loginLink?.closest("li")?.remove();
-
-        // Elimina "Agendar" duplicado si existe ya en HTML
-        const agendaLinks = navList.querySelectorAll('a[href="../html/agenda.html"]');
-        if (agendaLinks.length > 1) {
-          agendaLinks.forEach((link, index) => {
-            if (index > 0) link.closest("li")?.remove(); // Deja solo el primero
-          });
+        if (loginLink) {
+          const loginLi = loginLink.closest("li");
+          loginLi?.remove();
         }
 
-        // Agrega el nombre y botón cerrar sesión
+        // 🔸 Evita duplicar "Agendar"
+        const agendaLinks = navList.querySelectorAll('a[href="../html/agenda.html"]');
+        if (agendaLinks.length > 1) {
+          for (let i = 1; i < agendaLinks.length; i++) {
+            agendaLinks[i].closest("li")?.remove();
+          }
+        }
+
+        // 🔸 Agrega "Perfil" y "Cerrar Sesión"
         const userItem = document.createElement("li");
-        userItem.className = "nav-item d-flex align-items-center";
+        userItem.className = "nav-item dropdown";
         userItem.innerHTML = `
-          <span class="nav-link text-white fw-semibold">${user.nombre} ${user.apellidos}</span>
-          <button class="btn btn-sm btn-outline-light ms-2" id="logoutBtn">Cerrar Sesión</button>
+          <a class="nav-link dropdown-toggle text-white" href="#" id="perfilDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Perfil
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="perfilDropdown">
+            <li><a class="dropdown-item text-white" href="../html/perfil.html">Ver Perfil</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button class="dropdown-item text-danger" id="logoutBtn">Cerrar Sesión</button></li>
+          </ul>
         `;
         navList.appendChild(userItem);
 
-        // Marca sesión activa (opcional)
+        // 🔸 Marca sesión como activa
         localStorage.setItem("session", "true");
 
-        // Logout
+        // 🔸 Logout
         document.getElementById("logoutBtn").addEventListener("click", () => {
           sessionStorage.clear();
           localStorage.removeItem("session");
