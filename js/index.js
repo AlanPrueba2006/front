@@ -18,12 +18,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       const user = await response.json();
 
       if (response.ok) {
-        const loginLinks = navList.querySelectorAll("a");
-        loginLinks.forEach((link) => {
-          if (link.href.includes("login.html")) {
-            link.closest("li")?.remove();
-          }
-        });
+        const loginButton = navList.querySelector('a[href$="login.html"]');
+        if (loginButton) {
+          const loginLi = loginButton.closest("li");
+          if (loginLi) loginLi.remove();
+        }
 
         const agendaLinks = navList.querySelectorAll('a[href*="agenda.html"]');
         if (agendaLinks.length > 1) {
