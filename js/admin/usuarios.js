@@ -44,10 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
                   onclick="cambiarEstadoUsuario('${u.dni}')">
             ${u.is_active ? "Desactivar" : "Activar"}
           </button>
-          <button class="btn btn-danger btn-sm"
-                  onclick="desactivarUsuario('${u.dni}')">
-            <i class="fas fa-trash-alt"></i>
-          </button>
+          ${!u.is_active ? `
+            <button class="btn btn-danger btn-sm" onclick="eliminarUsuario('${u.dni}')">
+              <i class="fas fa-trash-alt"></i> Eliminar
+            </button>
+          ` : ''}
         </td>
       `;
       tablaUsuarios.appendChild(fila);
@@ -101,23 +102,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  window.desactivarUsuario = async function (dni) {
-    if (!confirm("¿Deseas desactivar (eliminar lógicamente) a este usuario?")) return;
+  window.eliminarUsuario = async function (dni) {
+    if (!confirm("¿Eliminar definitivamente este usuario? Esta acción no se puede deshacer.")) return;
 
     try {
-      const res = await fetch(`https://back-ww44.onrender.com/usuarios/${dni}/change-state/`, {
-        method: "PATCH",
+      const res = await fetch(`https://back-ww44.onrender.com/usuarios/${dni}/delete/`, {
+        method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.ok) {
+        alert("Usuario eliminado permanentemente.");
         obtenerUsuarios();
       } else {
         const msg = await res.text();
-        alert("Error al desactivar: " + msg);
+        alert("Error al eliminar: " + msg);
       }
     } catch (err) {
-      console.error("Error al desactivar usuario:", err);
+      console.error("Error al eliminar usuario:", err);
     }
   };
 
