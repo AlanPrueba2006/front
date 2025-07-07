@@ -45,8 +45,14 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${u.phone || "-"}</td>
         <td>${u.rol}</td>
         <td>
-          <button class="btn btn-danger btn-sm" onclick="eliminarUsuario('${u.dni}')">
-            <i class="fas fa-trash"></i>
+          <span class="badge ${u.is_active ? 'bg-success' : 'bg-secondary'}">
+            ${u.is_active ? 'Activo' : 'Inactivo'}
+          </span>
+        </td>
+        <td>
+          <button class="btn ${u.is_active ? 'btn-warning' : 'btn-success'} btn-sm"
+                  onclick="cambiarEstadoUsuario('${u.dni}', ${u.is_active})">
+            ${u.is_active ? 'Desactivar' : 'Activar'}
           </button>
         </td>
       `;
@@ -83,24 +89,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  window.eliminarUsuario = async function (dni) {
-    if (!confirm("¿Estás seguro de eliminar este usuario?")) return;
+  window.cambiarEstadoUsuario = async function (dni, estadoActual) {
+    const accion = estadoActual ? "desactivar" : "activar";
+    if (!confirm(`¿Deseas ${accion} a este usuario?`)) return;
 
     try {
-      const res = await fetch(`https://back-ww44.onrender.com/usuarios/${dni}/delete/`, {
-        method: "DELETE",
+      const res = await fetch(`https://back-ww44.onrender.com/usuarios/change-state/`, {
+        method: "PATCH",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({ dni, is_active: !estadoActual }),
       });
 
       if (res.ok) {
         obtenerUsuarios();
       } else {
-        alert("Error al eliminar el usuario.");
+        const msg = await res.text();
+        alert("Error al cambiar estado: " + msg);
       }
     } catch (err) {
-      console.error("Error al eliminar:", err);
+      console.error("Error al cambiar estado:", err);
     }
   };
 
@@ -112,7 +122,5 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "../index.html";
     });
   }
-
   obtenerUsuarios();
 });
-
