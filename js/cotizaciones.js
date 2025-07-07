@@ -57,11 +57,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           <p class="mb-1"><strong>Fecha:</strong> ${cot.fecha_evento}</p>
           <p class="mb-1"><strong>Invitados:</strong> ${cot.numero_invitados}</p>
           ${tienePrecio ? `<p class="mb-1"><strong>Precio:</strong> S/ ${cot.precio}</p>` : ""}
-          ${
-            tienePrecio && estado !== "pagada"
-              ? `<a href="pago.html" class="btn btn-outline-dark btn-sm">Realizar pago</a>`
-              : ""
-          }
+          ${tienePrecio && estado !== "pagada" ? `
+            <button class="btn btn-outline-dark btn-sm" onclick="realizarPago(${cot.id})">Realizar pago</button>
+          ` : ""}
         </div>
       `;
       container.appendChild(card);
@@ -72,6 +70,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     container.innerHTML = `<p class="text-danger">Hubo un error al cargar tus cotizaciones.</p>`;
   }
 });
+
+window.realizarPago = function (cotizacionId) {
+  sessionStorage.setItem("cotizacion_a_pagar", cotizacionId);
+  window.location.href = "pago.html";
+};
 
 document.getElementById("cerrarSesionLateral")?.addEventListener("click", () => {
   sessionStorage.clear();
