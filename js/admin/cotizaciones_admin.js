@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const token = sessionStorage.getItem("access_token");
   const tablaCotizaciones = document.getElementById("tablaCotizaciones");
-  const modalPrecio = new bootstrap.Modal(
-    document.getElementById("modalPrecio")
-  );
+  const modalPrecio = new bootstrap.Modal(document.getElementById("modalPrecio"));
   const formPrecio = document.getElementById("formActualizarPrecio");
   const inputId = document.getElementById("cotizacionIdPrecio");
   const inputPrecio = document.getElementById("nuevoPrecio");
@@ -15,12 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function obtenerCotizaciones() {
     try {
-      const res = await fetch(
-        "https://back-ww44.onrender.com/cotizacion/admin/",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await fetch("https://back-ww44.onrender.com/cotizacion/admin/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       if (!res.ok) throw new Error("No se pudieron obtener las cotizaciones");
 
@@ -38,30 +33,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const tr = document.createElement("tr");
 
       tr.innerHTML = `
-        <td>${c.cliente.username}</td>
-        <td>${c.tipo_servicio.nombre}</td>
+        <td>${c.cliente_username || "Sin cliente"}</td>
+        <td>${c.tipo_servicio || "Sin servicio"}</td>
         <td>${c.numero_invitados}</td>
         <td>${c.fecha_evento}</td>
         <td>${c.mensaje || "-"}</td>
         <td>${c.servicios_adicionales || "-"}</td>
         <td>S/ ${c.precio ?? "No definido"}</td>
-        <td><span class="badge ${getEstadoColor(c.estado)}">${
-        c.estado
-      }</span></td>
-        <td>${
-          c.comprobante_pago
-            ? `<a href="${c.comprobante_pago}" target="_blank">Ver</a>`
-            : "Sin archivo"
-        }</td>
+        <td><span class="badge ${getEstadoColor(c.estado)}">${c.estado}</span></td>
+        <td>${c.comprobante_pago ? `<a href="${c.comprobante_pago}" target="_blank">Ver</a>` : "Sin archivo"}</td>
         <td>
-          <button class="btn btn-sm btn-outline-success me-1" onclick="abrirModalPrecio(${
-            c.id
-          }, ${c.precio || 0})">
+          <button class="btn btn-sm btn-outline-success me-1" onclick="abrirModalPrecio(${c.id}, ${c.precio || 0})">
             <i class="fas fa-pen"></i>
           </button>
-          <button class="btn btn-sm btn-outline-warning" onclick="cambiarEstadoPago(${
-            c.id
-          }, '${c.estado}')">
+          <button class="btn btn-sm btn-outline-warning" onclick="cambiarEstadoPago(${c.id}, '${c.estado}')">
             <i class="fas fa-sync-alt"></i>
           </button>
         </td>
@@ -95,17 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const nuevoPrecio = inputPrecio.value;
 
     try {
-      const res = await fetch(
-        `https://back-ww44.onrender.com/cotizacion/${id}/precio/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ precio: parseFloat(nuevoPrecio) }),
-        }
-      );
+      const res = await fetch(`https://back-ww44.onrender.com/cotizacion/${id}/precio/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ precio: parseFloat(nuevoPrecio) }),
+      });
 
       if (!res.ok) throw new Error("Error al actualizar precio");
 
@@ -126,17 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
         : "pagada";
 
     try {
-      const res = await fetch(
-        `https://back-ww44.onrender.com/cotizacion/${id}/pago/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ estado: siguienteEstado }),
-        }
-      );
+      const res = await fetch(`https://back-ww44.onrender.com/cotizacion/${id}/pago/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ estado: siguienteEstado }),
+      });
 
       if (!res.ok) throw new Error("Error al cambiar estado de pago");
 
