@@ -28,11 +28,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     userCotizaciones.forEach(cot => {
       const card = document.createElement("div");
       const estado = cot.estado;
-      let badgeClass = "secondary", badgeText = "Desconocido";
+      const tienePrecio = !!cot.precio;
+
+      let badgeClass = "secondary";
+      let badgeText = "Desconocido";
 
       if (estado === "abierta") {
-        badgeClass = "danger";
-        badgeText = "Pendiente de revisión";
+        if (tienePrecio) {
+          badgeClass = "info";
+          badgeText = "Precio asignado - Aún sin pagar";
+        } else {
+          badgeClass = "danger";
+          badgeText = "Pendiente de revisión";
+        }
       } else if (estado === "pendiente") {
         badgeClass = "warning";
         badgeText = "Pendiente de pago";
@@ -48,8 +56,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           <span class="badge bg-${badgeClass}">${badgeText}</span>
           <p class="mb-1"><strong>Fecha:</strong> ${cot.fecha_evento}</p>
           <p class="mb-1"><strong>Invitados:</strong> ${cot.numero_invitados}</p>
-          ${cot.precio ? `<p class="mb-1"><strong>Precio:</strong> S/ ${cot.precio}</p>` : ""}
-          ${estado === "pendiente" ? `<a href="pago.html" class="btn btn-outline-dark btn-sm">Realizar pago</a>` : ""}
+          ${tienePrecio ? `<p class="mb-1"><strong>Precio:</strong> S/ ${cot.precio}</p>` : ""}
+          ${
+            tienePrecio && estado !== "pagada"
+              ? `<a href="pago.html" class="btn btn-outline-dark btn-sm">Realizar pago</a>`
+              : ""
+          }
         </div>
       `;
       container.appendChild(card);
@@ -66,4 +78,3 @@ document.getElementById("cerrarSesionLateral")?.addEventListener("click", () => 
   localStorage.removeItem("session");
   window.location.href = "../index.html";
 });
-
