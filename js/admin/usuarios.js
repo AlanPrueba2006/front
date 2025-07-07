@@ -15,15 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
   async function obtenerUsuarios() {
     try {
       const res = await fetch("https://back-ww44.onrender.com/usuarios/", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      if (!res.ok) {
-        console.error("Error en la respuesta:", await res.text());
-        return;
-      }
+      if (!res.ok) return console.error(await res.text());
 
       const data = await res.json();
       renderUsuarios(data);
@@ -44,15 +38,15 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${u.email}</td>
         <td>${u.phone || "-"}</td>
         <td>${u.rol}</td>
+        <td><span class="badge ${u.is_active ? "bg-success" : "bg-secondary"}">${u.is_active ? "Activo" : "Inactivo"}</span></td>
         <td>
-          <span class="badge ${u.is_active ? 'bg-success' : 'bg-secondary'}">
-            ${u.is_active ? 'Activo' : 'Inactivo'}
-          </span>
-        </td>
-        <td>
-          <button class="btn ${u.is_active ? 'btn-warning' : 'btn-success'} btn-sm"
-                  onclick="cambiarEstadoUsuario('${u.dni}', ${u.is_active})">
-            ${u.is_active ? 'Desactivar' : 'Activar'}
+          <button class="btn ${u.is_active ? "btn-warning" : "btn-success"} btn-sm me-1"
+                  onclick="cambiarEstadoUsuario('${u.dni}')">
+            ${u.is_active ? "Desactivar" : "Activar"}
+          </button>
+          <button class="btn btn-danger btn-sm"
+                  onclick="desactivarUsuario('${u.dni}')">
+            <i class="fas fa-trash-alt"></i>
           </button>
         </td>
       `;
@@ -70,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const res = await fetch("https://back-ww44.onrender.com/usuarios/register/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(nuevoUsuario),
       });
 
@@ -89,18 +81,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  window.cambiarEstadoUsuario = async function (dni, estadoActual) {
-    const accion = estadoActual ? "desactivar" : "activar";
-    if (!confirm(`¿Deseas ${accion} a este usuario?`)) return;
+  window.cambiarEstadoUsuario = async function (dni) {
+    if (!confirm("¿Deseas cambiar el estado de este usuario?")) return;
 
     try {
-      const res = await fetch(`https://back-ww44.onrender.com/usuarios/change-state/`, {
+      const res = await fetch(`https://back-ww44.onrender.com/usuarios/${dni}/change-state/`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ dni, is_active: !estadoActual }),
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (res.ok) {
@@ -114,6 +101,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  window.desactivarUsuario = async function (dni) {
+    if (!confirm("¿Deseas desactivar (eliminar lógicamente) a este usuario?")) return;
+
+    try {
+      const res = await fetch(`https://back-ww44.onrender.com/usuarios/${dni}/change-state/`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.ok) {
+        obtenerUsuarios();
+      } else {
+        const msg = await res.text();
+        alert("Error al desactivar: " + msg);
+      }
+    } catch (err) {
+      console.error("Error al desactivar usuario:", err);
+    }
+  };
+
   const cerrarSesionBtn = document.getElementById("cerrarSesionBtn");
   if (cerrarSesionBtn) {
     cerrarSesionBtn.addEventListener("click", () => {
@@ -122,5 +129,6 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "../index.html";
     });
   }
+
   obtenerUsuarios();
 });
