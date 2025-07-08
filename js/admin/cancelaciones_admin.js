@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const res = await fetch("https://back-ww44.onrender.com/admin/cancelaciones/", {
+    const res = await fetch("https://back-ww44.onrender.com/cancelaciones/admin/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -40,7 +40,7 @@ async function aceptarCancelacion(id) {
   if (!confirm("¿Seguro que deseas aceptar esta cancelación?")) return;
 
   try {
-    const res = await fetch(`https://back-ww44.onrender.com/cancelaciones/admin/`, {
+    const res = await fetch(`https://back-ww44.onrender.com/cancelaciones/${id}/aceptar/`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
