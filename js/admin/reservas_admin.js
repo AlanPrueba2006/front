@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const res = await fetch("https://back-ww44.onrender.com/reservas/admin", {
+    const res = await fetch("https://back-ww44.onrender.com/reservas/admin/", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
