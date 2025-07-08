@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!res.ok) throw new Error("Error al enviar el comprobante");
 
       alert("¡Pago enviado correctamente!");
-      window.location.href = "mis-cotizaciones.html";
+      window.location.href = "reservas.html";
     } catch (err) {
       console.error(err);
       alert("No se pudo enviar el comprobante.");
