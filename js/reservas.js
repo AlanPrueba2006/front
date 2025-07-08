@@ -77,7 +77,14 @@ cancelModal.addEventListener("show.bs.modal", function (event) {
 
 document.getElementById("confirmCancelBtn").addEventListener("click", async () => {
   const token = sessionStorage.getItem("access_token");
+  const motivo = document.getElementById("motivoCancelacion").value.trim();
+
   if (!reservaSeleccionada || !token) return;
+
+  if (!motivo) {
+    alert("Por favor, ingresa un motivo para la cancelación.");
+    return;
+  }
 
   try {
     const response = await fetch("https://back-ww44.onrender.com/solicitar-cancelacion/", {
@@ -86,17 +93,22 @@ document.getElementById("confirmCancelBtn").addEventListener("click", async () =
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({ reserva_id: reservaSeleccionada })
+      body: JSON.stringify({
+        reserva_id: reservaSeleccionada,
+        motivo_cliente: motivo
+      })
     });
 
     if (response.ok) {
       alert("Tu solicitud fue enviada correctamente.");
       location.reload();
     } else {
-      alert("Ocurrió un error al solicitar la cancelación.");
+      const error = await response.json();
+      alert(error.error || "Ocurrió un error al solicitar la cancelación.");
     }
   } catch (error) {
     console.error("Error de red:", error);
     alert("No se pudo conectar con el servidor.");
   }
 });
+
