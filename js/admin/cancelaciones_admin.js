@@ -18,13 +18,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const cancelaciones = await res.json();
     cancelaciones.forEach((item) => {
+      const reserva = item.reserva;
+
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>${item.reserva.cotizacion.cliente_username}</td>
-        <td>${item.reserva.cotizacion.tipo_servicio}</td>
+        <td>${reserva.cliente_username ?? 'No disponible'}</td>
+        <td>${reserva.tipo_servicio}</td>
         <td>${item.motivo_cliente}</td>
-        <td>${item.reserva.cotizacion.fecha_evento}</td>
-        <td>S/ ${item.reserva.cotizacion.precio}</td>
+        <td>${reserva.fecha_evento}</td>
+        <td>S/ ${reserva.precio}</td>
         <td><button class="btn btn-sm btn-success" onclick="aceptarCancelacion(${item.id})">Aceptar</button></td>
       `;
       tabla.appendChild(row);
