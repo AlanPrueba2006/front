@@ -47,7 +47,7 @@ body, html {
 }
 
 .limited-cell {
-  max-width: 200px;
+  max-width: 190px;
   max-height: 100px;
   overflow: auto;
   white-space: pre-wrap;
