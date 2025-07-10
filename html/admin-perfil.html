@@ -9,72 +9,97 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="../css/eventos.css" />
   <link rel="stylesheet" href="../css/negocio.css" />
+  <link rel="stylesheet" href="../css/admin.css">
 </head>
 
 <body>
-  <div class="d-flex">
-    <div class="bg-dark text-white p-3 vh-100" style="width: 250px;">
-      <div class="text-center mb-4">
-        <img src="../templates/img/Logoempresa.jpg" alt="Logo" style="max-width: 100px;" />
+  <div class="d-flex" id="layout">
+    <div class="d-flex">
+      <div class="sidebar bg-dark text-white p-3">
+        <div class="text-center mb-4">
+          <img src="../templates/img/Logoempresa.jpg" alt="Logo" class="img-fluid" style="max-height: 80px;" />
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item"><a href="admin-perfil.html" class="nav-link text-white"><i
+                class="fas fa-user me-2"></i>Perfil</a></li>
+          <li class="nav-item"><a href="usuarios.html" class="nav-link text-white"><i
+                class="fas fa-users me-2"></i>Usuarios</a></li>
+          <li class="nav-item"><a href="servicios-admin.html" class="nav-link text-white"><i
+                class="fas fa-briefcase me-2"></i>Servicios</a></li>
+          <li class="nav-item"><a href="cotizaciones_admin.html" class="nav-link text-white"><i
+                class="fas fa-file-invoice me-2"></i>Cotizaciones</a></li>
+          <li class="nav-item"><a href="reservas_admin.html" class="nav-link text-white"><i
+                class="fas fa-calendar-check me-2"></i>Reservas</a></li>
+          <li class="nav-item"><a href="cancelaciones.html" class="nav-link text-white"><i
+                class="fas fa-times-circle me-2"></i>Cancelaciones</a></li>
+          <li class="nav-item mt-3">
+            <button id="cerrarSesionBtn" class="btn btn-danger w-100">Cerrar Sesión</button>
+          </li>
+        </ul>
       </div>
-      <ul class="nav flex-column">
-        <li class="nav-item"><a href="../html/admin-perfil.html" class="nav-link text-white active"><i class="fas fa-user me-2"></i>Perfil</a></li>
-        <li class="nav-item"><a href="../html/usuarios.html" class="nav-link text-white"><i class="fas fa-users me-2"></i>Usuarios</a></li>
-        <li class="nav-item"><a href="../html/servicios-admin.html" class="nav-link text-white"><i class="fas fa-briefcase me-2"></i>Servicios</a></li>
-        <li class="nav-item"><a href="cotizaciones_admin.html" class="nav-link text-white"><i class="fas fa-file-invoice me-2"></i>Cotizaciones</a></li>
-        <li class="nav-item"><a href="reservas_admin.html" class="nav-link text-white"><i class="fas fa-calendar-check me-2"></i>Reservas</a></li>
-        <li class="nav-item"><a href="cancelaciones.html" class="nav-link text-white"><i class="fas fa-times-circle me-2"></i>Cancelaciones</a></li>
-        <li class="nav-item"><button id="cerrarSesionBtn" class="btn btn-danger w-100 mt-3">Cerrar Sesión</button></li>
-      </ul>
+
+      <div class="flex-grow-1 content p-4">
+        <button class="btn btn-outline-dark d-md-none mb-3"
+          onclick="document.querySelector('.sidebar').classList.toggle('show')">
+          <i class="fas fa-bars"></i> Menú
+        </button>
+
+        <h3><i class="fas fa-user me-2 text-dark"></i>Mi Perfil</h3>
+        <hr />
+        <div class="row">
+          <div class="col-md-6">
+            <p><strong>DNI:</strong> <span id="perfil-dni"></span></p>
+            <p><strong>Nombre completo:</strong> <span id="perfil-nombre"></span></p>
+            <p><strong>Nombre de usuario:</strong> <span id="perfil-username"></span></p>
+            <p><strong>Email:</strong> <span id="perfil-email"></span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Teléfono:</strong> <span id="perfil-phone"></span></p>
+            <p><strong>Dirección:</strong> <span id="perfil-address"></span></p>
+            <p><strong>Rol:</strong> <span id="perfil-rol"></span></p>
+            <p><strong>Estado:</strong> <span id="perfil-estado" class="badge"></span></p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="p-4 flex-grow-1">
-      <h3><i class="fas fa-user me-2 text-dark"></i>Mi Perfil</h3>
-      <hr />
-      <div class="row">
-        <div class="col-md-6">
-          <p><strong>DNI:</strong> <span id="perfil-dni"></span></p>
-          <p><strong>Nombre completo:</strong> <span id="perfil-nombre"></span></p>
-          <p><strong>Nombre de usuario:</strong> <span id="perfil-username"></span></p>
-          <p><strong>Email:</strong> <span id="perfil-email"></span></p>
-        </div>
-        <div class="col-md-6">
-          <p><strong>Teléfono:</strong> <span id="perfil-phone"></span></p>
-          <p><strong>Dirección:</strong> <span id="perfil-address"></span></p>
-          <p><strong>Rol:</strong> <span id="perfil-rol"></span></p>
-          <p><strong>Estado:</strong> <span id="perfil-estado" class="badge"></span></p>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const user = JSON.parse(sessionStorage.getItem("user_data"));
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const user = JSON.parse(sessionStorage.getItem("user_data"));
+      if (!user) {
+        window.location.href = "../index.html";
+      } else {
+        document.getElementById("perfil-dni").textContent = user.dni;
+        document.getElementById("perfil-nombre").textContent = `${user.nombre} ${user.apellidos}`;
+        document.getElementById("perfil-username").textContent = user.username;
+        document.getElementById("perfil-email").textContent = user.email;
+        document.getElementById("perfil-phone").textContent = user.phone || "No registrado";
+        document.getElementById("perfil-address").textContent = user.address || "No registrada";
+        document.getElementById("perfil-rol").textContent = user.rol === "admin" ? "Administrador" : "Cliente";
 
-    if (!user) {
-      window.location.href = "../index.html";
-    } else {
-      document.getElementById("perfil-dni").textContent = user.dni;
-      document.getElementById("perfil-nombre").textContent = `${user.nombre} ${user.apellidos}`;
-      document.getElementById("perfil-username").textContent = user.username;
-      document.getElementById("perfil-email").textContent = user.email;
-      document.getElementById("perfil-phone").textContent = user.phone || "No registrado";
-      document.getElementById("perfil-address").textContent = user.address || "No registrada";
-      document.getElementById("perfil-rol").textContent = user.rol === "admin" ? "Administrador" : "Cliente";
+        const estadoEl = document.getElementById("perfil-estado");
+        estadoEl.textContent = user.is_active ? "Activo" : "Inactivo";
+        estadoEl.classList.remove("bg-success", "bg-danger");
+        estadoEl.classList.add(user.is_active ? "bg-success" : "bg-danger");
+      }
 
-      const estadoEl = document.getElementById("perfil-estado");
-      estadoEl.textContent = user.is_active ? "Activo" : "Inactivo";
-      estadoEl.classList.remove("bg-success", "bg-danger");
-      estadoEl.classList.add(user.is_active ? "bg-success" : "bg-danger");
-    }
+      document.getElementById("cerrarSesionBtn").addEventListener("click", () => {
+        sessionStorage.clear();
+        localStorage.removeItem("session");
+        window.location.href = "../index.html";
+      });
 
-    document.getElementById("cerrarSesionBtn").addEventListener("click", () => {
-      sessionStorage.clear();
-      localStorage.removeItem("session");
-      window.location.href = "../index.html";
-    });
-  </script>
+      const btnCerrarSesion = document.getElementById("cerrarSesionBtn");
+      if (btnCerrarSesion) {
+        btnCerrarSesion.addEventListener("click", () => {
+          sessionStorage.clear();
+          localStorage.clear();
+          window.location.href = "../index.html";
+        });
+      }
+    </script>
 </body>
+
 </html>
