@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <td>${c.tipo_servicio || "Sin servicio"}</td>
         <td>${c.numero_invitados}</td>
         <td>${c.fecha_evento}</td>
-        <td>${c.mensaje || "-"}</td>
-        <td>${c.servicios_adicionales || "-"}</td>
+        <td class="limited-cell">${c.mensaje || "-"}</td>
+        <td class="limited-cell">${c.servicios_adicionales || "-"}</td>
         <td>S/ ${c.precio ?? "No definido"}</td>
         <td><span class="badge ${getEstadoColor(c.estado)}">${c.estado}</span></td>
         <td>${c.comprobante_pago ? `<a href="${c.comprobante_pago}" target="_blank">Ver</a>` : "Sin archivo"}</td>

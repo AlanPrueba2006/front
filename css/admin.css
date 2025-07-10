@@ -37,13 +37,22 @@ body, html {
 }
 
 .table-cotizaciones {
-  min-width: 1200px;
+  min-width: 2200px;
 }
 
 .table td, .table th {
   word-break: break-word;
   white-space: normal;
 }
+
+.limited-cell {
+  max-width: 200px;      
+  max-height: 100px;
+  overflow: auto;
+  white-space: pre-wrap; 
+  word-break: break-word;
+}
+
 
 @media (max-width: 768px) {
   .sidebar {
