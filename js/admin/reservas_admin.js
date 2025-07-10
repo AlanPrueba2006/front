@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     reservas.forEach((reserva) => {
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>${reserva.cotizacion.cliente_username}</td>
-        <td>${reserva.cotizacion.tipo_servicio}</td>
-        <td>${reserva.cotizacion.fecha_evento}</td>
-        <td>S/ ${reserva.cotizacion.precio}</td>
+        <td>${reserva.cliente_username}</td>
+        <td>${reserva.tipo_servicio}</td>
+        <td>${reserva.fecha_evento}</td>
+        <td>S/ ${reserva.precio}</td>
         <td><span class="badge bg-${getBadge(reserva.estado)}">${reserva.estado}</span></td>
       `;
       tabla.appendChild(row);
