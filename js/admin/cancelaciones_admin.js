@@ -42,7 +42,7 @@ async function aceptarCancelacion(id) {
   if (!confirm("¿Seguro que deseas aceptar esta cancelación?")) return;
 
   try {
-    const res = await fetch(`https://back-ww44.onrender.com/cancelaciones/${id}/aceptar/`, {
+    const res = await fetch(`https://back-ww44.onrender.com/cancelacion/${id}/aceptar/`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
