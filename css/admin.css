@@ -8,6 +8,14 @@ body, html {
   width: 250px;
   min-height: 100vh;
   background-color: #212529;
+  transition: transform 0.3s ease;
+  z-index: 1030;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  min-width: 0;
 }
 
 .sidebar .nav-link.active {
@@ -17,13 +25,19 @@ body, html {
 
 @media (max-width: 768px) {
   .sidebar {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1050;
+    height: 100%;
+    overflow-y: auto;
   }
 
   .sidebar.show {
     transform: translateX(0);
+  }
+
+  .content {
+    padding: 1rem;
   }
 }
