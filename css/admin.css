@@ -36,6 +36,10 @@ body, html {
   max-width: 100%;
 }
 
+.table-cotizaciones {
+  min-width: 1200px;
+}
+
 .table td, .table th {
   word-break: break-word;
   white-space: normal;
