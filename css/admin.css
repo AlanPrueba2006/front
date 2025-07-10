@@ -41,3 +41,34 @@ body, html {
     padding: 1rem;
   }
 }
+
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.table td, .table th {
+  word-break: break-word;
+  white-space: normal;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .sidebar {
+    width: 250px;
+    position: fixed;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+
+  .content {
+    margin-left: 0;
+  }
+}
+
