@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const row = document.createElement("tr");
       row.innerHTML = `
-        <td>${reserva.cliente_username ?? 'No disponible'}</td>
+        <td>${item.reserva.cliente_username}</td>
         <td>${reserva.tipo_servicio}</td>
         <td>${item.motivo_cliente}</td>
         <td>${reserva.fecha_evento}</td>
