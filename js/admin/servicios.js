@@ -19,10 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
           tr.innerHTML = `
             <td>${s.titulo}</td>
             <td class="limited-cell">${s.descripcion}</td>
-            <td>
-              <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
-              <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
-            </td>
           `;
           tabla.appendChild(tr);
         });
